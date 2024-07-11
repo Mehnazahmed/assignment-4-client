@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TCategory } from "@/types/intex";
+import { TCategory } from "@/types";
 import { Link } from "react-router-dom";
 const CategoryCard = ({ category }: { category: TCategory }) => {
   return (
     <Card className="bg-gray-900 text-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
-      <Link to="">
+      <Link to={`/products/category/${category?.category}`}>
         <CardHeader className="p-3">
           <img
             src={category?.image}

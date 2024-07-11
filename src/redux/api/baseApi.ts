@@ -18,6 +18,18 @@ export const baseApi = createApi({
         url: "/products",
       }),
     }),
+    getProductsById: builder.query({
+      query: (id) => ({
+        method: "GET",
+        url: `/products/${id}`,
+      }),
+    }),
+    getProductsByCategoryName: builder.query({
+      query: (category) => ({
+        method: "GET",
+        url: `/products/category/${category}`,
+      }),
+    }),
     createProduct: builder.mutation({
       query: (data) => {
         console.log(data);
@@ -44,6 +56,8 @@ export const baseApi = createApi({
 export const {
   useGetPlantsCategoriesQuery,
   useGetProductsQuery,
+  useGetProductsByCategoryNameQuery,
+  useGetProductsByIdQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
 } = baseApi;

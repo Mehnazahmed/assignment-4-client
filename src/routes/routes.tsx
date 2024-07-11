@@ -6,6 +6,8 @@ import Home from "@/pages/Home/Home";
 import Categories from "@/pages/Categories/Categories";
 import NotFound from "@/pages/Shared/NotFound/NotFound";
 import AboutUs from "@/pages/AboutUs/AboutUs";
+import ProductsByCategory from "@/pages/Products/ProductsByCategory/ProductsByCategory";
+import ProductDetails from "@/pages/Products/ProductDetails/ProductDetails";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
+      },
+      {
+        path: "/products/:id",
+        element: <ProductDetails />,
+      },
+      {
+        path: "/products/category/:category",
+        element: <ProductsByCategory />,
       },
       {
         path: "/categories",

@@ -1,6 +1,6 @@
 import { useGetPlantsCategoriesQuery } from "@/redux/api/baseApi";
 import CategoryCard from "./CategoryCard";
-import { TCategory } from "@/types/intex";
+import { TCategory } from "@/types";
 
 const Categories = () => {
   const { data: categories, isLoading } = useGetPlantsCategoriesQuery({});

@@ -1,16 +1,14 @@
 export type TProduct = {
   _id: string;
   title: string;
+  price: number;
+  category: string;
   description: string;
-  releaseDate: Date;
-  genre: string;
-  director: string;
-  cast: string;
-  slug: string;
-  viewCount: number;
-  totalRating: number;
-  isDeleted: boolean;
+  rating: number;
   image: string;
+  brand: string;
+  stock: number;
+  isDeleted?: boolean;
 };
 export type TCategory = {
   _id: string;
