@@ -5,6 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import Home from "@/pages/Home/Home";
 import Categories from "@/pages/Categories/Categories";
 import NotFound from "@/pages/Shared/NotFound/NotFound";
+import AboutUs from "@/pages/AboutUs/AboutUs";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "/categories",
         element: <Categories />,
+      },
+      {
+        path: "/aboutUs",
+        element: <AboutUs />,
       },
       {
         path: "*",

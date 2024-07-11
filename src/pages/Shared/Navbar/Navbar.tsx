@@ -24,7 +24,7 @@ export default function Navbar() {
           <NavigationMenuList>
             <div className="flex justify-end">
               <NavigationMenuItem>
-                <Link to="/AboutUs">
+                <Link to="/aboutUs">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     About Us
                   </NavigationMenuLink>

@@ -1,5 +1,6 @@
 import { useGetPlantsCategoriesQuery } from "@/redux/api/baseApi";
 import CategoryCard from "./CategoryCard";
+import { TCategory } from "@/types/intex";
 
 const Categories = () => {
   const { data: categories, isLoading } = useGetPlantsCategoriesQuery({});
@@ -11,13 +12,12 @@ const Categories = () => {
       </p>
     );
   return (
-    <div className="my-5">
-      <h1 className="text-4xl font-bold text-yellow-400">What to watch</h1>
-      <h2 className="text-2xl font-bold my-2  border-l-4 border-l-yellow-400 px-1">
-        Top Rated Movies
+    <div className="my-5 mt-12">
+      <h2 className="text-3xl font-bold my-2 border-l-4 px-1 text-center">
+        Categories
       </h2>
       <div className="grid md:grid-cols-4 sm:grid-cols-1 gap-4 mx-auto my-5">
-        {categories?.data?.map((category) => (
+        {categories?.data?.map((category: TCategory) => (
           <CategoryCard key={category?._id} category={category} />
         ))}
       </div>

@@ -33,37 +33,42 @@ export function HeroSection() {
   ];
 
   return (
-    <div className="relative w-full h-[500px] mt-6">
-      <Carousel
-        className=" overflow-hidden rounded-lg shadow-lg"
-        plugins={[
-          Autoplay({
-            delay: 6000,
-          }),
-        ]}
-      >
-        <CarouselContent className="flex">
-          {sliderData.map((slider) => (
-            <CarouselItem key={slider.id} className="min-w-full">
-              <Card className="bg-transparent">
-                <CardContent className="flex items-center justify-center h-[500px] p-0">
-                  <img
-                    src={slider?.image}
-                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                    alt=""
-                  />
-                </CardContent>
-              </Card>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full cursor-pointer hover:bg-opacity-75 transition-opacity duration-300">
-          &#9664;
-        </CarouselPrevious>
-        <CarouselNext className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full cursor-pointer hover:bg-opacity-75 transition-opacity duration-300">
-          &#9654;
-        </CarouselNext>
-      </Carousel>
+    <div>
+      <h1 className="text-8xl mb-4">
+        Bring Nature <br /> to your Home .......
+      </h1>
+      <div className="relative w-full h-[500px] mt-6">
+        <Carousel
+          className=" overflow-hidden rounded-lg shadow-lg"
+          plugins={[
+            Autoplay({
+              delay: 6000,
+            }),
+          ]}
+        >
+          <CarouselContent className="flex">
+            {sliderData.map((slider) => (
+              <CarouselItem key={slider.id} className="min-w-full">
+                <Card className="bg-transparent">
+                  <CardContent className="flex items-center justify-center h-[500px] p-0">
+                    <img
+                      src={slider?.image}
+                      className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                      alt=""
+                    />
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full cursor-pointer hover:bg-opacity-75 transition-opacity duration-300">
+            &#9664;
+          </CarouselPrevious>
+          <CarouselNext className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full cursor-pointer hover:bg-opacity-75 transition-opacity duration-300">
+            &#9654;
+          </CarouselNext>
+        </Carousel>
+      </div>
     </div>
   );
 }
