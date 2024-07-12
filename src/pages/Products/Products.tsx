@@ -11,22 +11,63 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TProduct } from "@/types";
 import AddProductModal from "./AddProduct/AddProductModal";
+import ProductFilter from "./ProductFilter/ProductFilter";
+import { useState } from "react";
+import UpdateProductModal from "./UpdateProduct/UpdateProductModal";
+import Swal from "sweetalert2";
 
 const Products = () => {
+  const [category, setCategory] = useState("");
   const { data: products, isLoading } = useGetProductsQuery({});
   if (isLoading) {
     <p>Loading......</p>;
   }
   console.log(products);
+
+  const handleDelete = () => {
+    const swalWithCustomButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "custom-confirm-btn",
+        cancelButton: "custom-cancel-btn",
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithCustomButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          swalWithCustomButtons.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithCustomButtons.fire({
+            title: "Cancelled",
+            text: "Your imaginary file is safe :)",
+            icon: "error",
+          });
+        }
+      });
+  };
   return (
     <div>
       <div>
-        <h1 className="text-3xl font-bold mt-4 border-l-4 p-2 text-center">
+        <h1 className="text-3xl font-bold mt-4 mb-6 border-l-4 p-2 text-center">
           Available Plants
         </h1>
-        <div className="flex justify-between ml-36 ">
+        <div className="flex justify-around  ">
           <AddProductModal />
-          {/* <TodoFilter priority={priority} setPriority={setPriority} /> */}
+          <ProductFilter category={category} setCategory={setCategory} />
         </div>
 
         <div className="mx-auto py-2 px-36 ">
@@ -54,7 +95,10 @@ const Products = () => {
                   <TableCell>{product.price}</TableCell>
                   <TableRow>
                     <TableCell>
-                      <Button className="bg-red-500 rounded-lg">
+                      <Button
+                        onClick={() => handleDelete()}
+                        className="bg-red-500 rounded-lg"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -72,22 +116,7 @@ const Products = () => {
                       </Button>
                     </TableCell>
                     <TableCell>
-                      <Button className="bg-[#5C53FE] rounded-lg">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="size-5"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                          />
-                        </svg>
-                      </Button>
+                      <UpdateProductModal />
                     </TableCell>
                   </TableRow>
                 </TableRow>

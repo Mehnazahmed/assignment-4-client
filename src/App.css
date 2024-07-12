@@ -1,0 +1,31 @@
+/* Custom SweetAlert2 button styles */
+.swal2-confirm.custom-confirm-btn {
+  background-color: #4caf50; /* Green */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 4px;
+}
+
+.swal2-cancel.custom-cancel-btn {
+  background-color: #f44336; /* Red */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 4px;
+}
+
+/* Additional styling for hover effects */
+.swal2-confirm.custom-confirm-btn:hover {
+  background-color: #45a049;
+}
+
+.swal2-cancel.custom-cancel-btn:hover {
+  background-color: #d32f2f;
+}

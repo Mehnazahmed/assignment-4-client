@@ -7,8 +7,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -18,9 +16,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useState } from "react";
 
-const AddProductModal = () => {
+const UpdateProductModal = () => {
   const [title, setTitle] = useState("");
   const [brand, setBrand] = useState("");
   const [price, setPrice] = useState("");
@@ -30,13 +30,26 @@ const AddProductModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-primary-gradient text-xl  font-semibold bg-yellow-500">
-          Add Product
+        <Button className="bg-[#5C53FE] rounded-lg">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="size-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+            />
+          </svg>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-yellow-100 ">
         <DialogHeader>
-          <DialogTitle className="text-center">Add Product</DialogTitle>
+          <DialogTitle className="text-center">Update Product</DialogTitle>
         </DialogHeader>
         <form>
           <div className="grid gap-4 py-4">
@@ -45,7 +58,7 @@ const AddProductModal = () => {
                 Image
               </Label>
               <Input
-                // onBlur={(e) => setTask(e.target.value)}
+                onBlur={(e) => setImage(e.target.value)}
                 id="image"
                 className="col-span-3"
               />
@@ -120,7 +133,7 @@ const AddProductModal = () => {
           </div>
           <DialogClose>
             <Button className="ml-36 bg-yellow-600 rounded-lg" type="submit">
-              Add Product
+              Update Product
             </Button>
           </DialogClose>
         </form>
@@ -129,4 +142,4 @@ const AddProductModal = () => {
   );
 };
 
-export default AddProductModal;
+export default UpdateProductModal;
