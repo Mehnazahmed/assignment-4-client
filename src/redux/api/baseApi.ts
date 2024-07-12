@@ -1,7 +1,5 @@
-// Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// Define a service using a base URL and expected endpoints
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1" }),
@@ -30,7 +28,7 @@ export const baseApi = createApi({
         url: `/products/category/${category}`,
       }),
     }),
-    createProduct: builder.mutation({
+    addProduct: builder.mutation({
       query: (data) => {
         console.log(data);
         return {
@@ -50,6 +48,23 @@ export const baseApi = createApi({
         };
       },
     }),
+    deleteProduct: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/products/${id}`,
+          method: "DELETE",
+        };
+      },
+    }),
+    createOrder: builder.mutation({
+      query: (order) => {
+        return {
+          url: "/order",
+          method: "POST",
+          body: order,
+        };
+      },
+    }),
   }),
 });
 
@@ -58,6 +73,8 @@ export const {
   useGetProductsQuery,
   useGetProductsByCategoryNameQuery,
   useGetProductsByIdQuery,
-  useCreateProductMutation,
+  useAddProductMutation,
   useUpdateProductMutation,
+  useCreateOrderMutation,
+  useDeleteProductMutation,
 } = baseApi;

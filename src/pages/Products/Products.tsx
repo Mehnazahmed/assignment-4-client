@@ -1,4 +1,7 @@
-import { useGetProductsQuery } from "@/redux/api/baseApi";
+import {
+  useDeleteProductMutation,
+  useGetProductsQuery,
+} from "@/redux/api/baseApi";
 import {
   Table,
   TableBody,
@@ -15,17 +18,23 @@ import ProductFilter from "./ProductFilter/ProductFilter";
 import { useState } from "react";
 import UpdateProductModal from "./UpdateProduct/UpdateProductModal";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { removeProduct } from "@/redux/features/productSlice";
 
 const Products = () => {
   const [category, setCategory] = useState("");
-  const { data: products, isLoading } = useGetProductsQuery({});
+
+  const { data: products, isLoading, refetch } = useGetProductsQuery({});
+  const dispatch = useDispatch();
+  const [deleteProduct] = useDeleteProductMutation();
+
   if (isLoading) {
     <p>Loading......</p>;
   }
   console.log(products);
 
   //delete product
-  const handleDelete = () => {
+  const handleDelete = (id) => {
     const swalWithCustomButtons = Swal.mixin({
       customClass: {
         confirmButton: "custom-confirm-btn",
@@ -46,6 +55,9 @@ const Products = () => {
       })
       .then((result) => {
         if (result.isConfirmed) {
+          deleteProduct(id);
+          dispatch(removeProduct(id));
+          refetch();
           swalWithCustomButtons.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",
@@ -97,7 +109,7 @@ const Products = () => {
                   <TableRow>
                     <TableCell>
                       <Button
-                        onClick={() => handleDelete()}
+                        onClick={() => handleDelete(product._id)}
                         className="bg-red-500 rounded-lg"
                       >
                         <svg
@@ -117,7 +129,7 @@ const Products = () => {
                       </Button>
                     </TableCell>
                     <TableCell>
-                      <UpdateProductModal />
+                      <UpdateProductModal product={product} />
                     </TableCell>
                   </TableRow>
                 </TableRow>

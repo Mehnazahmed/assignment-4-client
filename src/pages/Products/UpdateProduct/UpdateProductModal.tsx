@@ -2,31 +2,68 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogClose,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { useState, useEffect } from "react";
+import { useUpdateProductMutation } from "@/redux/api/baseApi";
+import Swal from "sweetalert2";
 
-const UpdateProductModal = () => {
-  const [title, setTitle] = useState("");
-  const [brand, setBrand] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+const UpdateProductModal = ({ product }) => {
+  const [title, setTitle] = useState(product?.title || "");
+  const [brand, setBrand] = useState(product?.brand || "");
+  const [price, setPrice] = useState(product?.price || 0);
+  const [image, setImage] = useState<File | null>(null);
+  const [description, setDescription] = useState(product?.description || "");
+  const [category, setCategory] = useState(product?.category || "");
+  const [rating, setRating] = useState(product?.rating || 0);
+  const [stock, setStock] = useState(product?.stock || 0);
+
+  const [updateProduct, { isLoading }] = useUpdateProductMutation();
+
+  if (isLoading) {
+    <h1>Loading.....</h1>;
+  }
+
+  useEffect(() => {
+    if (product) {
+      setTitle(product.title);
+      setBrand(product.brand);
+      setPrice(product.price);
+      setDescription(product.description);
+      setCategory(product.category);
+      setRating(product.rating);
+      setStock(product.stock);
+    }
+  }, [product]);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const updatedProduct = {
+      _id: product._id,
+      title,
+      brand,
+      price,
+      image,
+      description,
+      category,
+      rating,
+      stock,
+    };
+    console.log(updatedProduct);
+    try {
+      await updateProduct({ id: product._id, updatedProduct });
+
+      Swal.fire("Product updated successfully!", "success");
+    } catch (error) {
+      console.error("Error updating product:", error);
+      Swal.fire("Error", "Failed to update product", "error");
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -47,29 +84,20 @@ const UpdateProductModal = () => {
           </svg>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-yellow-100 ">
+      <DialogContent className="sm:max-w-[425px] bg-yellow-100">
         <DialogHeader>
-          <DialogTitle className="text-center">Update Product</DialogTitle>
+          <DialogTitle>Update Product</DialogTitle>
         </DialogHeader>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="image" className="text-right">
-                Image
-              </Label>
-              <Input
-                onBlur={(e) => setImage(e.target.value)}
-                id="image"
-                className="col-span-3"
-              />
-            </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="title" className="text-right">
                 Title
               </Label>
               <Input
-                onBlur={(e) => setTitle(e.target.value)}
-                id="task"
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 className="col-span-3"
               />
             </div>
@@ -78,8 +106,9 @@ const UpdateProductModal = () => {
                 Brand
               </Label>
               <Input
-                onBlur={(e) => setBrand(e.target.value)}
                 id="brand"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
                 className="col-span-3"
               />
             </div>
@@ -88,8 +117,21 @@ const UpdateProductModal = () => {
                 Price
               </Label>
               <Input
-                onBlur={(e) => setPrice(e.target.value)}
                 id="price"
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(parseFloat(e.target.value))}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="image" className="text-right">
+                Image
+              </Label>
+              <Input
+                id="image"
+                type="file"
+                onChange={(e) => setImage(e.target.files[0])}
                 className="col-span-3"
               />
             </div>
@@ -98,44 +140,51 @@ const UpdateProductModal = () => {
                 Description
               </Label>
               <Input
-                onBlur={(e) => setDescription(e.target.value)}
                 id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 className="col-span-3"
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="category" className="text-right">
+              <Label htmlFor="category" className="text-right">
                 Category
-              </label>
-              <Select onValueChange={(value) => setCategory(value)}>
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Select Category" />
-                </SelectTrigger>
-                <SelectContent className=" bg-yellow-100">
-                  <SelectGroup>
-                    <SelectLabel>Category</SelectLabel>
-                    <SelectItem value="trees">Trees</SelectItem>
-                    <SelectItem value="medium">Shrubs</SelectItem>
-                    <SelectItem value="vagetables">Vagetables</SelectItem>
-                    <SelectItem value="fruits">Fruits</SelectItem>
-                    <SelectItem value="herbs">Herbs</SelectItem>
-                    <SelectItem value="flowering platns">
-                      Flowering Platns
-                    </SelectItem>
-                    <SelectItem value="indoor plants">Indoor Plants</SelectItem>
-                    <SelectItem value="specialty plants">
-                      Specialty Plants
-                    </SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              </Label>
+              <Input
+                id="category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="rating" className="text-right">
+                Rating
+              </Label>
+              <Input
+                id="rating"
+                type="number"
+                value={rating}
+                onChange={(e) => setRating(parseFloat(e.target.value))}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="stock" className="text-right">
+                Stock
+              </Label>
+              <Input
+                id="stock"
+                type="number"
+                value={stock}
+                onChange={(e) => setStock(parseInt(e.target.value))}
+                className="col-span-3"
+              />
             </div>
           </div>
-          <DialogClose>
-            <Button className="ml-36 bg-yellow-600 rounded-lg" type="submit">
-              Update Product
-            </Button>
-          </DialogClose>
+          <Button type="submit" className="mt-4">
+            Update Product
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

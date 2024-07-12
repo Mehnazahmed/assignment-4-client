@@ -71,10 +71,10 @@ const Cart = () => {
     return (
       <div className="container h-screen mx-auto flex justify-center my-6">
         <div>
-          <h1 className="text-2xl my-4">Your Cart Is Empty!!</h1>
+          <h1 className="text-3xl my-4">Your Cart Is Empty!!</h1>
           <Link to="/">
             {" "}
-            <Button className="bg-primary-gradient text-xl  font-semibold bg-yellow-500">
+            <Button className="bg-primary-gradient text-xl ml-10  font-semibold bg-yellow-500">
               Start Shopping
             </Button>
           </Link>
@@ -131,9 +131,11 @@ const Cart = () => {
             .reduce((total, item) => total + item.price * item.quantity, 0)
             .toFixed(2)}
         </h3>
-        <Button className="bg-green-500 hover:bg-green-600 text-white mt-4 mb-8">
-          Proceed to Checkout
-        </Button>
+        <Link to="/checkout">
+          <Button className="bg-green-500 hover:bg-green-600 text-white mt-4 mb-8">
+            Proceed to Checkout
+          </Button>
+        </Link>
       </div>
     </div>
   );

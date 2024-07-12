@@ -28,29 +28,30 @@ const cartSlice = createSlice({
         state.cart.push({ ...action.payload, quantity: 1 });
       }
     },
-    incrementQuantity: (state, action: PayloadAction<string>) => {
-      const product = state.cart.find((item) => item._id === action.payload);
-      if (product && product.quantity < product.stock) {
-        product.quantity += 1;
-      }
-    },
 
-    decrementQuantity: (state, action: PayloadAction<string>) => {
-      const product = state.cart.find((item) => item._id === action.payload);
-      if (product && product.quantity > 1) {
-        product.quantity -= 1;
-      }
-    },
     removeFromCart: (state, action: PayloadAction<string>) => {
       state.cart = state.cart.filter((item) => item._id !== action.payload);
+    },
+    decreaseStock: (
+      state,
+      action: PayloadAction<{ id: string; quantity: number }>
+    ) => {
+      const product = state.cart.find((item) => item._id === action.payload.id);
+      if (product) {
+        product.stock -= action.payload.quantity;
+      }
+    },
+    clearCart: (state) => {
+      state.cart = [];
     },
   },
 });
 
 export const {
   addToCart,
-  incrementQuantity,
-  decrementQuantity,
+  decreaseStock,
+  clearCart,
+
   removeFromCart,
 } = cartSlice.actions;
 

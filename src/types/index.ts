@@ -1,13 +1,13 @@
 export type TProduct = {
-  _id: string;
+  _id?: string;
   title: string;
   price: number;
   category: string;
   description: string;
-  rating: number;
+  rating?: number;
   image: string;
   brand: string;
-  stock: number;
+  stock?: number;
   isDeleted?: boolean;
 };
 export type TCategory = {
