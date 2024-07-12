@@ -8,6 +8,7 @@ import NotFound from "@/pages/Shared/NotFound/NotFound";
 import AboutUs from "@/pages/AboutUs/AboutUs";
 import ProductsByCategory from "@/pages/Products/ProductsByCategory/ProductsByCategory";
 import ProductDetails from "@/pages/Products/ProductDetails/ProductDetails";
+import Cart from "@/pages/Cart/Cart";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/aboutUs",
         element: <AboutUs />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
       {
         path: "*",

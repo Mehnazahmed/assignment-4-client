@@ -24,6 +24,7 @@ const Products = () => {
   }
   console.log(products);
 
+  //delete product
   const handleDelete = () => {
     const swalWithCustomButtons = Swal.mixin({
       customClass: {
@@ -53,7 +54,7 @@ const Products = () => {
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithCustomButtons.fire({
             title: "Cancelled",
-            text: "Your imaginary file is safe :)",
+            text: "Your file is safe :)",
             icon: "error",
           });
         }

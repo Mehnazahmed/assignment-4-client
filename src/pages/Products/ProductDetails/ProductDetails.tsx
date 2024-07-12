@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { useGetProductsByIdQuery } from "@/redux/api/baseApi";
+import { addToCart } from "@/redux/features/cartSlice";
 import { Star, StarIcon } from "lucide-react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -11,6 +14,17 @@ const ProductDetails = () => {
   }
   console.log(product);
 
+  const dispatch = useDispatch();
+  // add to cart
+
+  const handleAddToCart = () => {
+    if (product?.data?.stock > 0) {
+      dispatch(addToCart(product?.data));
+    } else {
+      Swal.fire("This product is out of stock!");
+    }
+  };
+  //stars
   const renderStars = (rating: number) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -70,7 +84,10 @@ const ProductDetails = () => {
             </div>
             <p className="text-justify mb-4">{product?.description}</p>
             <div className="mb-4">
-              <Button className="px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg font-bold hover:bg-yellow-400">
+              <Button
+                onClick={handleAddToCart}
+                className="px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg font-bold hover:bg-yellow-400"
+              >
                 Add To Cart
               </Button>
             </div>
