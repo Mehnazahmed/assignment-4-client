@@ -105,7 +105,7 @@ const Products = () => {
       return 0;
     });
 
-  const currentProducts = filteredAndSortedProducts.slice(
+  const currentProducts = filteredAndSortedProducts?.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );

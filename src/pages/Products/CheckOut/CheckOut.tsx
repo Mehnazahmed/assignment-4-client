@@ -56,8 +56,10 @@ const Checkout = () => {
     createOrder({
       ...formData,
       totalAmount,
-
-      products: cart,
+      items: cart.map((item) => ({
+        _id: item._id,
+        quantity: item.quantity,
+      })),
     })
       .unwrap()
       .then((response) => {
@@ -86,7 +88,7 @@ const Checkout = () => {
   return (
     <div className="container mx-auto p-10 m-8 w-[400px] border-2 bg-slate-100">
       <h2 className="text-3xl mb-4 text-center">Checkout</h2>
-      <form onSubmit={handleSubmit} className="space-y-4 ">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block mb-2">Name:</label>
           <Input
