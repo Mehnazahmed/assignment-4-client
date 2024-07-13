@@ -84,7 +84,7 @@ const UpdateProductModal = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-[#5C53FE] rounded-lg ">
+        <Button className="bg-[#5C53FE] rounded-lg m-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

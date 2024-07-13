@@ -74,7 +74,7 @@ const AddProductModal = ({ refetch }: { refetch: () => void }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="bg-primary-gradient text-xl font-bold bg-yellow-400 hover:bg-yellow-300 py-2 px-4 rounded-lg">
+        <button className="bg-primary-gradient text-xl font-bold mb-2 bg-yellow-400 hover:bg-yellow-300 py-2 px-4 rounded-lg">
           Add Product
         </button>
       </DialogTrigger>
