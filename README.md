@@ -32,23 +32,24 @@ export default {
 - Install dependencies:
 
 bash
-Copy code
+
 npm install
 cd client
 npm install
 cd ..
+
 Configuration:
 Create a .env file in the root directory of the project and add the following variables:
 
 bash
-Copy code
+
 PORT=3000
 DB_URL=your_mongodb_connection_string
 STRIPE_SECRET_KEY=your_stripe_secret_key
 Run the project:
 
 bash
-Copy code
+
 npm run dev
 Usage
 Landing Page:
