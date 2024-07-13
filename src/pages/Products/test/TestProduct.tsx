@@ -16,10 +16,10 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { removeProduct } from "@/redux/features/productSlice";
-import AddProductModal from "./AddProduct/AddProductModal";
-import UpdateProductModal from "./UpdateProduct/UpdateProductModal";
+import UpdateProductModal from "../UpdateProduct/UpdateProductModal";
+import AddProductModal from "../AddProduct/AddProductModal";
 
-const Products = () => {
+const TestProduct = () => {
   const [category, setCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -231,4 +231,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default TestProduct;

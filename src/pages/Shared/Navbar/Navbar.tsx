@@ -39,6 +39,11 @@ export default function Navbar() {
                     Products
                   </NavigationMenuLink>
                 </Link>
+                {/* <Link to="/test">
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    test
+                  </NavigationMenuLink>
+                </Link> */}
                 <Link to="/cart">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     <svg

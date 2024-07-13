@@ -1,71 +1,66 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-
 import { removeFromCart } from "@/redux/features/cartSlice";
-
 import { RootState } from "@/redux/store";
-
 import { useSelector, useDispatch } from "react-redux";
-
 import { Link } from "react-router-dom";
-
 import Swal from "sweetalert2";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart.cart);
-
   const dispatch = useDispatch();
 
   const handleRemove = (_id: string) => {
     const swalWithCustomButtons = Swal.mixin({
       customClass: {
         confirmButton: "custom-confirm-btn",
-
         cancelButton: "custom-cancel-btn",
       },
-
       buttonsStyling: false,
     });
 
     swalWithCustomButtons
-
       .fire({
         title: "Are you sure?",
-
         text: "You won't be able to revert this!",
-
         icon: "warning",
-
         showCancelButton: true,
-
         confirmButtonText: "Yes, delete it!",
-
         cancelButtonText: "No, cancel!",
-
         reverseButtons: true,
       })
-
       .then((result) => {
         if (result.isConfirmed) {
           dispatch(removeFromCart(_id));
-
           swalWithCustomButtons.fire({
             title: "Deleted!",
-
             text: "Your file has been deleted.",
-
             icon: "success",
           });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithCustomButtons.fire({
             title: "Cancelled",
-
             text: "Your file is safe :)",
-
             icon: "error",
           });
         }
       });
   };
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (cart.length > 0) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [cart]);
 
   if (cart.length === 0) {
     return (
@@ -73,8 +68,7 @@ const Cart = () => {
         <div>
           <h1 className="text-3xl my-4">Your Cart Is Empty!!</h1>
           <Link to="/">
-            {" "}
-            <Button className="bg-primary-gradient text-xl ml-10  font-semibold bg-yellow-500">
+            <Button className="bg-primary-gradient text-xl ml-10 font-semibold bg-yellow-500">
               Start Shopping
             </Button>
           </Link>

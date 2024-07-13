@@ -39,12 +39,12 @@ export const baseApi = createApi({
       },
     }),
     updateProduct: builder.mutation({
-      query: ({ id, data }) => {
-        console.log(data);
+      query: ({ id, ...rest }) => {
+        console.log(rest);
         return {
           url: `/products/${id}`,
-          method: "POST",
-          body: data,
+          method: "PUT",
+          body: rest,
         };
       },
     }),

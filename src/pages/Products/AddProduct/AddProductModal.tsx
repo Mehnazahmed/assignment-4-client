@@ -19,15 +19,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FormEvent, useState } from "react";
-import {
-  useAddProductMutation,
-  useCreateProductMutation,
-} from "@/redux/api/baseApi";
+import { useAddProductMutation } from "@/redux/api/baseApi";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
-import { addProduct, createProduct } from "@/redux/features/productSlice";
+import { createProduct } from "@/redux/features/productSlice";
 
-const AddProductModal = () => {
+const AddProductModal = ({ refetch }) => {
   const [title, setTitle] = useState<string>("");
   const [brand, setBrand] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
@@ -62,6 +59,7 @@ const AddProductModal = () => {
       console.log("Submitting Product:", productDetails); // Debugging log
       await addProduct(productDetails);
       await dispatch(createProduct(productDetails));
+      refetch();
       Swal.fire("Success", "Product added successfully!", "success");
       // Reset form fields
       setTitle("");
@@ -96,7 +94,7 @@ const AddProductModal = () => {
                 Image
               </Label>
               <Input
-                type="file"
+                type="text"
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
                 id="image"
@@ -190,16 +188,16 @@ const AddProductModal = () => {
                 <SelectContent className="bg-yellow-100">
                   <SelectGroup>
                     <SelectLabel>Category</SelectLabel>
-                    <SelectItem value="trees">Trees</SelectItem>
-                    <SelectItem value="shrubs">Shrubs</SelectItem>
-                    <SelectItem value="vegetables">Vegetables</SelectItem>
-                    <SelectItem value="fruits">Fruits</SelectItem>
-                    <SelectItem value="herbs">Herbs</SelectItem>
-                    <SelectItem value="flowering plants">
+                    <SelectItem value="Trees">Trees</SelectItem>
+                    <SelectItem value="Shrubs">Shrubs</SelectItem>
+                    <SelectItem value="Vegetables">Vegetables</SelectItem>
+                    <SelectItem value="Fruits">Fruits</SelectItem>
+                    <SelectItem value="Herbs">Herbs</SelectItem>
+                    <SelectItem value="Flowering Plants">
                       Flowering Plants
                     </SelectItem>
-                    <SelectItem value="indoor plants">Indoor Plants</SelectItem>
-                    <SelectItem value="specialty plants">
+                    <SelectItem value="Indoor Plants">Indoor Plants</SelectItem>
+                    <SelectItem value="Specialty Plants">
                       Specialty Plants
                     </SelectItem>
                   </SelectGroup>

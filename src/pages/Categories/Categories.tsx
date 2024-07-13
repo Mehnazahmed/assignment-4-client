@@ -13,8 +13,8 @@ const Categories = () => {
     );
   return (
     <div className="my-5 mt-12">
-      <h2 className="text-3xl font-bold my-2 border-l-4 px-1 text-center">
-        Categories
+      <h2 className="text-3xl font-bold my-8 border-l-4 px-1 text-center">
+        All Categories
       </h2>
       <div className="grid md:grid-cols-4 sm:grid-cols-1 gap-4 mx-auto my-5">
         {categories?.data?.map((category: TCategory) => (

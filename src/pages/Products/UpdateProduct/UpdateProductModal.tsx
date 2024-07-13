@@ -8,15 +8,16 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { useUpdateProductMutation } from "@/redux/api/baseApi";
 import Swal from "sweetalert2";
+import { TProduct } from "@/types";
 
-const UpdateProductModal = ({ product }) => {
+const UpdateProductModal = ({ product, refetch }: { product: TProduct }) => {
   const [title, setTitle] = useState(product?.title || "");
   const [brand, setBrand] = useState(product?.brand || "");
   const [price, setPrice] = useState(product?.price || 0);
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState(product?.image || "");
   const [description, setDescription] = useState(product?.description || "");
   const [category, setCategory] = useState(product?.category || "");
   const [rating, setRating] = useState(product?.rating || 0);
@@ -33,6 +34,7 @@ const UpdateProductModal = ({ product }) => {
       setTitle(product.title);
       setBrand(product.brand);
       setPrice(product.price);
+      setImage(product.image);
       setDescription(product.description);
       setCategory(product.category);
       setRating(product.rating);
@@ -40,7 +42,7 @@ const UpdateProductModal = ({ product }) => {
     }
   }, [product]);
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const updatedProduct = {
       _id: product._id,
@@ -55,9 +57,16 @@ const UpdateProductModal = ({ product }) => {
     };
     console.log(updatedProduct);
     try {
-      await updateProduct({ id: product._id, updatedProduct });
+      await updateProduct({ id: product._id, ...updatedProduct });
+      refetch();
 
-      Swal.fire("Product updated successfully!", "success");
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Product Updated Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
       console.error("Error updating product:", error);
       Swal.fire("Error", "Failed to update product", "error");
@@ -67,7 +76,7 @@ const UpdateProductModal = ({ product }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-[#5C53FE] rounded-lg">
+        <Button className="bg-[#5C53FE] rounded-lg ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -86,7 +95,7 @@ const UpdateProductModal = ({ product }) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-yellow-100">
         <DialogHeader>
-          <DialogTitle>Update Product</DialogTitle>
+          <DialogTitle className="text-center">Update Product</DialogTitle>
         </DialogHeader>
         <form onSubmit={onSubmit}>
           <div className="grid gap-4 py-4">
@@ -130,8 +139,8 @@ const UpdateProductModal = ({ product }) => {
               </Label>
               <Input
                 id="image"
-                type="file"
-                onChange={(e) => setImage(e.target.files[0])}
+                type="text"
+                onChange={(e) => setImage(e.target.value)}
                 className="col-span-3"
               />
             </div>
@@ -182,7 +191,7 @@ const UpdateProductModal = ({ product }) => {
               />
             </div>
           </div>
-          <Button type="submit" className="mt-4">
+          <Button className="ml-36 bg-yellow-600 rounded-lg" type="submit">
             Update Product
           </Button>
         </form>

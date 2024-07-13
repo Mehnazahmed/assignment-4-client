@@ -4,10 +4,10 @@ export type TProduct = {
   price: number;
   category: string;
   description: string;
-  rating?: number;
+  rating: number;
   image: string;
   brand: string;
-  stock?: number;
+  stock: number;
   isDeleted?: boolean;
 };
 export type TCategory = {
