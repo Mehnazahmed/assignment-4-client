@@ -66,7 +66,7 @@ const Checkout = () => {
         if (response.success) {
           // Reduce stock quantities
           cart.forEach((item) => {
-            dispatch(decreaseStock({ id: item._id, quantity: item.quantity }));
+            dispatch(decreaseStock({ id: item._id!, quantity: item.quantity }));
           });
 
           // Clear cart

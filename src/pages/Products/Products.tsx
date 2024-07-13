@@ -98,7 +98,7 @@ const Products = () => {
     .filter((product: TProduct) =>
       category ? product.category === category : true
     )
-    .sort((a, b) => {
+    .sort((a: TProduct, b: TProduct) => {
       if (sortType === "title") {
         return a.title.localeCompare(b.title);
       }
@@ -127,7 +127,7 @@ const Products = () => {
       <TableRow>
         <TableCell>
           <Button
-            onClick={() => handleDelete(product._id)}
+            onClick={() => handleDelete(product._id!)}
             className="bg-red-500 rounded-lg mr-0 "
           >
             <svg

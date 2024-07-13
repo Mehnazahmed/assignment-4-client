@@ -13,7 +13,13 @@ import { useUpdateProductMutation } from "@/redux/api/baseApi";
 import Swal from "sweetalert2";
 import { TProduct } from "@/types";
 
-const UpdateProductModal = ({ product, refetch }: { product: TProduct }) => {
+const UpdateProductModal = ({
+  product,
+  refetch,
+}: {
+  product: TProduct;
+  refetch: () => void;
+}) => {
   const [title, setTitle] = useState(product?.title || "");
   const [brand, setBrand] = useState(product?.brand || "");
   const [price, setPrice] = useState(product?.price || 0);

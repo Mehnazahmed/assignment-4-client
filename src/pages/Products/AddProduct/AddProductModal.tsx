@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const AddProductModal = ({ refetch }) => {
+const AddProductModal = ({ refetch }: { refetch: () => void }) => {
   const [title, setTitle] = useState("");
   const [brand, setBrand] = useState("");
   const [price, setPrice] = useState(0);
@@ -43,12 +43,12 @@ const AddProductModal = ({ refetch }) => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const productDetails = {
-      title,
-      brand,
+      title: title || "",
+      brand: brand || "",
       price,
-      image,
-      description,
-      category,
+      image: image || "",
+      description: description || "",
+      category: category || "",
       rating,
       stock,
       isDeleted: false,
@@ -176,11 +176,8 @@ const AddProductModal = ({ refetch }) => {
               <Label htmlFor="category" className="text-right">
                 Category
               </Label>
-              <Select
-                onValueChange={(value) => setCategory(value)}
-                className="col-span-3"
-              >
-                <SelectTrigger>
+              <Select onValueChange={(value) => setCategory(value)}>
+                <SelectTrigger className="col-span-3">
                   <SelectValue placeholder="Select Category" />
                 </SelectTrigger>
                 <SelectContent className="bg-yellow-100">

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { removeFromCart } from "@/redux/features/cartSlice";
 import { RootState } from "@/redux/store";
@@ -48,7 +48,7 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    const handleBeforeUnload = (event: React.FormEvent) => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       if (cart.length > 0) {
         event.preventDefault();
         event.returnValue = "";
@@ -97,7 +97,7 @@ const Cart = () => {
               </div>
               <Button
                 className="bg-red-500 hover:bg-red-600 text-white rounded-lg"
-                onClick={() => handleRemove(item._id)}
+                onClick={() => handleRemove(item._id!)}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
