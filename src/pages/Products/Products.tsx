@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import {
   useGetProductsQuery,
   useDeleteProductMutation,
@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { removeProduct } from "@/redux/features/productSlice";
 import AddProductModal from "./AddProduct/AddProductModal";
 import UpdateProductModal from "./UpdateProduct/UpdateProductModal";
+import { TProduct } from "@/types";
 
 const Products = () => {
   const [category, setCategory] = useState("");
@@ -44,7 +45,7 @@ const Products = () => {
     };
   }, [searchTerm]);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     const swalWithCustomButtons = Swal.mixin({
       customClass: {
         confirmButton: "custom-confirm-btn",
@@ -83,7 +84,7 @@ const Products = () => {
       });
   };
 
-  const handleSort = (type) => {
+  const handleSort = (type: string) => {
     setSortType(type);
   };
 
@@ -91,10 +92,12 @@ const Products = () => {
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
 
   const filteredAndSortedProducts = products?.data
-    ?.filter((product) =>
+    ?.filter((product: TProduct) =>
       product.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
     )
-    .filter((product) => (category ? product.category === category : true))
+    .filter((product: TProduct) =>
+      category ? product.category === category : true
+    )
     .sort((a, b) => {
       if (sortType === "title") {
         return a.title.localeCompare(b.title);
@@ -110,7 +113,7 @@ const Products = () => {
     indexOfLastProduct
   );
 
-  const tableRows = currentProducts?.map((product) => (
+  const tableRows = currentProducts?.map((product: TProduct) => (
     <TableRow key={product._id}>
       <TableCell>
         <Avatar>
@@ -151,7 +154,11 @@ const Products = () => {
   ));
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <p className="text-3xl text-center text-black-500 my-2 font-bold">
+        Loading....
+      </p>
+    );
   }
 
   return (

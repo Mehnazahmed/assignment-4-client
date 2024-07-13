@@ -1,4 +1,8 @@
-import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
+
+import { useAddProductMutation } from "@/redux/api/baseApi";
+import Swal from "sweetalert2";
+
 import {
   Dialog,
   DialogContent,
@@ -18,31 +22,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FormEvent, useState } from "react";
-import { useAddProductMutation } from "@/redux/api/baseApi";
-import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
-import { createProduct } from "@/redux/features/productSlice";
 
 const AddProductModal = ({ refetch }) => {
-  const [title, setTitle] = useState<string>("");
-  const [brand, setBrand] = useState<string>("");
-  const [price, setPrice] = useState<number>(0);
-  const [image, setImage] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
-  const [rating, setRating] = useState<number>(0); // Add rating state
-  const [stock, setStock] = useState<number>(0); // Add stock state
+  const [title, setTitle] = useState("");
+  const [brand, setBrand] = useState("");
+  const [price, setPrice] = useState(0);
+  const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [rating, setRating] = useState(0); // Add rating state
+  const [stock, setStock] = useState(0); // Add stock state
 
   const [addProduct, { isLoading }] = useAddProductMutation();
-
-  const dispatch = useDispatch();
-
   if (isLoading) {
-    return <h1>Loading......</h1>;
+    <p className="text-3xl text-center text-black-500 my-2 font-bold">
+      Loading....
+    </p>;
   }
 
-  const onSubmit = async (e: FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const productDetails = {
       title,
@@ -51,27 +49,24 @@ const AddProductModal = ({ refetch }) => {
       image,
       description,
       category,
-      rating, // Include rating
-      stock, // Include stock
+      rating,
+      stock,
       isDeleted: false,
     };
     try {
-      console.log("Submitting Product:", productDetails); // Debugging log
       await addProduct(productDetails);
-      await dispatch(createProduct(productDetails));
       refetch();
       Swal.fire("Success", "Product added successfully!", "success");
-      // Reset form fields
       setTitle("");
       setBrand("");
       setPrice(0);
       setImage("");
       setDescription("");
       setCategory("");
-      setRating(0); // Reset rating
-      setStock(0); // Reset stock
+      setRating(0);
+      setStock(0);
     } catch (error) {
-      console.error("Error adding product:", error); // Debugging log
+      console.error("Error adding product:", error);
       Swal.fire("Error", "Failed to add product", "error");
     }
   };
@@ -79,17 +74,17 @@ const AddProductModal = ({ refetch }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-primary-gradient text-xl font-semibold bg-yellow-500">
+        <button className="bg-primary-gradient text-xl font-bold bg-yellow-400 hover:bg-yellow-300 py-2 px-4 rounded-lg">
           Add Product
-        </Button>
+        </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-yellow-100">
+      <DialogContent className="max-w-md mx-auto p-4 sm:p-8 bg-yellow-100">
         <DialogHeader>
           <DialogTitle className="text-center">Add Product</DialogTitle>
         </DialogHeader>
         <form onSubmit={onSubmit}>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
+          <div className="grid gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
               <Label htmlFor="image" className="text-right">
                 Image
               </Label>
@@ -98,11 +93,11 @@ const AddProductModal = ({ refetch }) => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
                 id="image"
-                className="col-span-3"
+                className="col-span-3 w-full p-2 border rounded"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
               <Label htmlFor="title" className="text-right">
                 Title
               </Label>
@@ -110,11 +105,11 @@ const AddProductModal = ({ refetch }) => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 id="title"
-                className="col-span-3"
+                className="col-span-3 w-full p-2 border rounded"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
               <Label htmlFor="brand" className="text-right">
                 Brand
               </Label>
@@ -122,11 +117,11 @@ const AddProductModal = ({ refetch }) => {
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
                 id="brand"
-                className="col-span-3"
+                className="col-span-3 w-full p-2 border rounded"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
               <Label htmlFor="price" className="text-right">
                 Price
               </Label>
@@ -135,11 +130,11 @@ const AddProductModal = ({ refetch }) => {
                 value={price}
                 onChange={(e) => setPrice(parseFloat(e.target.value))}
                 id="price"
-                className="col-span-3"
+                className="col-span-3 w-full p-2 border rounded"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
               <Label htmlFor="description" className="text-right">
                 Description
               </Label>
@@ -147,11 +142,11 @@ const AddProductModal = ({ refetch }) => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 id="description"
-                className="col-span-3"
+                className="col-span-3 w-full p-2 border rounded"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
               <Label htmlFor="rating" className="text-right">
                 Rating
               </Label>
@@ -160,11 +155,11 @@ const AddProductModal = ({ refetch }) => {
                 value={rating}
                 onChange={(e) => setRating(parseFloat(e.target.value))}
                 id="rating"
-                className="col-span-3"
+                className="col-span-3 w-full p-2 border rounded"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
               <Label htmlFor="stock" className="text-right">
                 Stock
               </Label>
@@ -173,16 +168,19 @@ const AddProductModal = ({ refetch }) => {
                 value={stock}
                 onChange={(e) => setStock(parseFloat(e.target.value))}
                 id="stock"
-                className="col-span-3"
+                className="col-span-3 w-full p-2 border rounded"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="category" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+              <Label htmlFor="category" className="text-right">
                 Category
-              </label>
-              <Select onValueChange={(value) => setCategory(value)}>
-                <SelectTrigger className="col-span-3">
+              </Label>
+              <Select
+                onValueChange={(value) => setCategory(value)}
+                className="col-span-3"
+              >
+                <SelectTrigger>
                   <SelectValue placeholder="Select Category" />
                 </SelectTrigger>
                 <SelectContent className="bg-yellow-100">
@@ -204,12 +202,17 @@ const AddProductModal = ({ refetch }) => {
                 </SelectContent>
               </Select>
             </div>
+            <div className="text-center mt-4">
+              <DialogClose>
+                <button
+                  className="bg-yellow-600 text-white hover:bg-yellow-700 py-2 px-4 rounded-lg"
+                  type="submit"
+                >
+                  Add Product
+                </button>
+              </DialogClose>
+            </div>
           </div>
-          <DialogClose>
-            <Button className="ml-36 bg-yellow-600 rounded-lg" type="submit">
-              Add Product
-            </Button>
-          </DialogClose>
         </form>
       </DialogContent>
     </Dialog>

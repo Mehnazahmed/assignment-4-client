@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { removeFromCart } from "@/redux/features/cartSlice";
 import { RootState } from "@/redux/store";
@@ -48,7 +48,7 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    const handleBeforeUnload = (event) => {
+    const handleBeforeUnload = (event: React.FormEvent) => {
       if (cart.length > 0) {
         event.preventDefault();
         event.returnValue = "";

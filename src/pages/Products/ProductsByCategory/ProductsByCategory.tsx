@@ -8,7 +8,9 @@ const ProductsByCategory = () => {
     category as string
   );
   if (isLoading) {
-    <p>Loading......</p>;
+    <p className="text-3xl text-center text-black-500 my-2 font-bold">
+      Loading....
+    </p>;
   }
   console.log(products);
   return (

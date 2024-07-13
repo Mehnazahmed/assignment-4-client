@@ -19,7 +19,7 @@ export default function Navbar() {
     <div className="mx-auto container  ">
       <div className="flex  items-center justify-between border-b-2 py-3 ">
         <Link to="/" className="flex items-center">
-          <div className=" bg-yellow-400 p-2 rounded-md flex">
+          <div className=" bg-yellow-400 hover:bg-yellow-300 p-2 rounded-md flex">
             {" "}
             <h3 className="font-extrabold pr-2">Breath Natural</h3>
             <GiFruitTree />
@@ -39,11 +39,11 @@ export default function Navbar() {
                     Products
                   </NavigationMenuLink>
                 </Link>
-                {/* <Link to="/test">
+                <Link to="/categories">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    test
+                    Categories
                   </NavigationMenuLink>
-                </Link> */}
+                </Link>
                 <Link to="/cart">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     <svg

@@ -10,9 +10,11 @@ const ProductDetails = () => {
   const { id } = useParams();
   const { data: product, isLoading } = useGetProductsByIdQuery(id);
   if (isLoading) {
-    <p>Loading......</p>;
+    <p className="text-3xl text-center text-black-500 my-2 font-bold">
+      Loading....
+    </p>;
   }
-  console.log(product);
+  // console.log(product);
 
   const dispatch = useDispatch();
   // add to cart

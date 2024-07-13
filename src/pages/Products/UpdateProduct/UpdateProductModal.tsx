@@ -26,7 +26,9 @@ const UpdateProductModal = ({ product, refetch }: { product: TProduct }) => {
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
   if (isLoading) {
-    <h1>Loading.....</h1>;
+    <p className="text-3xl text-center text-black-500 my-2 font-bold">
+      Loading....
+    </p>;
   }
 
   useEffect(() => {
@@ -55,7 +57,7 @@ const UpdateProductModal = ({ product, refetch }: { product: TProduct }) => {
       rating,
       stock,
     };
-    console.log(updatedProduct);
+    // console.log(updatedProduct);
     try {
       await updateProduct({ id: product._id, ...updatedProduct });
       refetch();

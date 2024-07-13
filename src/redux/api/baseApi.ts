@@ -32,7 +32,7 @@ export const baseApi = createApi({
     }),
     addProduct: builder.mutation({
       query: (data) => {
-        console.log(data);
+        // console.log(data);
         return {
           url: "/products/create-product",
           method: "POST",
@@ -42,7 +42,7 @@ export const baseApi = createApi({
     }),
     updateProduct: builder.mutation({
       query: ({ id, ...rest }) => {
-        console.log(rest);
+        // console.log(rest);
         return {
           url: `/products/${id}`,
           method: "PUT",

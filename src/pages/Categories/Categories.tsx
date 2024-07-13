@@ -4,10 +4,10 @@ import { TCategory } from "@/types";
 
 const Categories = () => {
   const { data: categories, isLoading } = useGetPlantsCategoriesQuery({});
-  console.log(categories?.data);
+  // console.log(categories?.data);
   if (isLoading)
     return (
-      <p className="text-3xl text-center text-yellow-500 my-2 font-bold">
+      <p className="text-3xl text-center text-black-500 my-2 font-bold">
         Loading....
       </p>
     );
